@@ -132,6 +132,9 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
           template.concat super(attribute, *(args << options))
           template.concat error_span(attribute)
           block.call if block.present? and 'append' == options[:add_on].to_s
+          if (help = options[:help])
+            template.concat template.content_tag(:span, help, class: 'help-block')
+          end
         }
       end
     end
