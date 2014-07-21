@@ -141,7 +141,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def select(method, choices, options={}, html_options={})
-    label    = opitions.delete :label
+    label    = options.delete :label
     label_class = options[:label_class] || @options[:default_label_class]
     options.delete :label_class
 
