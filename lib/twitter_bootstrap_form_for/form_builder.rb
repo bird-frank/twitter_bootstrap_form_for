@@ -9,7 +9,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   attr_reader :object_name
 
   INPUTS = [
-    :select,
+    # :select,
     *ActionView::Helpers::FormBuilder.instance_methods.grep(%r{
       _(area|field|select)$ # all area, field, and select methods
     }mx).map(&:to_sym)
@@ -138,6 +138,32 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
         }
       end
     end
+  end
+
+  def select(method, choices, options={}, html_options={})
+    label    = opitions.delete :label
+    label_class = options[:label_class] || @options[:default_label_class]
+    options.delete :label_class
+
+    self.div_wrapper(attribute, :class => 'form-group') do
+      template.concat self.label(method, label, :class => label_class) if label
+
+      html_options[:class] ||= 'form-control'
+      classes = []
+      if options[:div_class].present?
+        classes << options[:div_class]
+      elsif @options[:default_div_class].present?
+        classes <<  @options[:default_div_class]
+      end
+
+      template.concat template.content_tag(:div, :class => classes.join(' ')) {
+        template.concat super(method, choices, options, html_options)
+        template.concat error_span(attribute)
+        if (help = options[:help])
+          template.concat template.content_tag(:span, help, class: 'help-block')
+        end
+      }
+    end    
   end
 
   TOGGLES.each do |toggle|
