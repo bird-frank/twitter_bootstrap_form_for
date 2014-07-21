@@ -158,7 +158,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
 
       template.concat template.content_tag(:div, :class => classes.join(' ')) {
         template.concat super(method, choices, options, html_options)
-        template.concat error_span(attribute)
+        template.concat error_span(method)
         if (help = options[:help])
           template.concat template.content_tag(:span, help, class: 'help-block')
         end
