@@ -145,7 +145,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
     label_class = options[:label_class] || @options[:default_label_class]
     options.delete :label_class
 
-    self.div_wrapper(attribute, :class => 'form-group') do
+    self.div_wrapper(method, :class => 'form-group') do
       template.concat self.label(method, label, :class => label_class) if label
 
       html_options[:class] ||= 'form-control'
