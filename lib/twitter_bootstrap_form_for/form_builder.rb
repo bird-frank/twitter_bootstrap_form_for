@@ -173,11 +173,15 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
       target      = self.object_name.to_s + '_' + attribute.to_s
       label_attrs = toggle == :check_box ? { :for => target } : {}
 
-      template.concat template.content_tag(:label, label_attrs) {
-        template.concat super(attribute, *args)
-        template.concat ' ' # give the input and span some room
-        template.concat template.content_tag(:span, label)
+      div_class = (toggle == 'check_box') ? 'checkbox' : 'radio'
+      div = template.content_tag(:div, class: 'div_class') {
+        template.content_tag(:label, label_attrs) {
+          template.concat super(attribute, *args)
+          template.concat ' ' # give the input and span some room
+          template.concat template.content_tag(:span, label)
+        }
       }
+      template.concat div
       if toggle == :check_box
         template.concat template.content_tag(:div, :class => "has-error") {
           template.concat error_span(attribute)
